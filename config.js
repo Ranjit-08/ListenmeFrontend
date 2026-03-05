@@ -1,6 +1,6 @@
 // config.js — ListenMe
 // Set this to your Frontend Public ALB DNS (or EC2 IP for single-server)
-const API_BASE = 'http://FRONTEND-PUBLIC-ALB-DNS/api';
+const API_BASE = 'https://listenmebackend.onrender.com/api';
 
 const api = {
   async request(method, path, body = null, auth = true) {
