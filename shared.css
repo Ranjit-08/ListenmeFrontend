@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════
-   ListenMe — Spotify-Inspired Design System
+   ListenMe — Design System  (RJ monogram edition)
    ═══════════════════════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Syne:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -50,17 +50,33 @@ html, body {
   border-bottom: 1px solid var(--border);
   position: sticky; top: 0; z-index: 200;
 }
+
+/* RJ Monogram logo */
 .navbar .logo {
   font-family: var(--font-display); font-size: 18px; font-weight: 900;
   text-decoration: none; color: var(--text);
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; gap: 10px;
 }
 .navbar .logo .logo-icon {
-  width: 28px; height: 28px; border-radius: 50%;
+  position: relative;
+  width: 34px; height: 34px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.navbar .logo .logo-icon .jr-mono {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-size: 19px;
+  color: #1db954; letter-spacing: -2px; line-height: 1;
+}
+.navbar .logo .logo-icon .jr-dot {
+  position: absolute; bottom: 1px; right: 1px;
+  width: 7px; height: 7px; border-radius: 50%;
   background: var(--primary);
-  display: flex; align-items: center; justify-content: center; font-size: 13px;
+  box-shadow: 0 0 8px rgba(29,185,84,0.6);
 }
 .navbar .logo span { color: var(--accent); }
+
 .nav-links { display: flex; align-items: center; gap: 2px; }
 .nav-links a, .nav-links button {
   padding: 6px 14px; border-radius: 4px;
@@ -94,15 +110,32 @@ html, body {
 }
 @keyframes authIn { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 
+/* RJ logo on auth cards */
 .auth-logo {
-  font-family: var(--font-display); font-size: 22px; font-weight: 900;
-  margin-bottom: 6px; display: flex; align-items: center; gap: 9px;
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 6px;
+  animation: fadeInUp 0.5s 0.1s ease both;
 }
-.auth-logo .logo-icon {
-  width: 36px; height: 36px; border-radius: 50%; background: var(--primary);
-  display: flex; align-items: center; justify-content: center; font-size: 17px;
+.auth-logo .jr-wrap {
+  position: relative; width: 40px; height: 40px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);
 }
-.auth-logo span { color: var(--accent); }
+.auth-logo .jr-wrap .jr-mono {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-size: 22px;
+  color: #1db954; letter-spacing: -2px; line-height: 1;
+}
+.auth-logo .jr-wrap .jr-dot {
+  position: absolute; bottom: 1px; right: 1px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--primary); box-shadow: 0 0 10px rgba(29,185,84,0.6);
+}
+.auth-logo .auth-brand {
+  font-family: var(--font-display); font-size: 22px; font-weight: 900; color: var(--text);
+}
+.auth-logo .auth-brand span { color: var(--accent); }
+
 .auth-subtitle { color: var(--text-2); font-size: 14px; margin-bottom: 26px; }
 
 .step { display: none; }
@@ -189,8 +222,7 @@ select option { background: var(--card); }
 .admin-badge {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 3px 9px; border-radius: 50px;
-  background: rgba(29,185,84,0.08);
-  border: 1px solid rgba(29,185,84,0.2);
+  background: rgba(29,185,84,0.08); border: 1px solid rgba(29,185,84,0.2);
   color: var(--accent); font-size: 11px; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.06em;
 }
@@ -198,7 +230,6 @@ select option { background: var(--card); }
 .page-title { font-family: var(--font-display); font-size: 28px; font-weight: 900; margin-bottom: 4px; }
 .page-title span { color: var(--accent); }
 .page-desc { color: var(--text-2); margin-bottom: 26px; font-size: 14px; }
-
 .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
 
 .password-wrap { position: relative; }
@@ -220,8 +251,10 @@ select option { background: var(--card); }
 
 @keyframes fadeInUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
+/* ── MOBILE ── */
 @media (max-width: 600px) {
-  .navbar { padding: 0 14px; }
-  .page-container { padding: 18px 14px; }
-  .auth-card { padding: 28px 18px; }
+  .navbar { padding: 0 14px; height: 54px; }
+  .page-container { padding: 16px 14px; }
+  .auth-card { padding: 26px 16px; }
+  .otp-digit { width: 42px !important; height: 46px; font-size: 18px; }
 }
