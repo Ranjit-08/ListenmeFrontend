@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ListenMe — Discover</title>
+  <script src="theme.js"></script>
   <link rel="stylesheet" href="shared.css"/>
   <style>
     :root { --primary: #1db954; }
@@ -963,6 +964,7 @@ function playSong(idx, songList) {
   updateMiniBar(s); updateFullPlayer(s); openFullPlayer();
   addRecent(s); renderView();
   api.post(`/songs/${s.id}/play`, {}).catch(() => {});
+  setMediaSession(s);
 }
 
 function updateMiniBar(s) {
@@ -1241,6 +1243,46 @@ function showThemeToast(msg) {
     if (saved !== 'green') applyTheme(saved);
   } catch(e) {}
 })();
+
+// ── Media Session API (background play + lock screen controls) ──
+function setMediaSession(s) {
+  if (!('mediaSession' in navigator)) return;
+
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title:  s.title  || 'Unknown Title',
+    artist: s.artist || 'Unknown Artist',
+    album:  s.album  || 'ListenMe',
+    artwork: s.cover_url ? [
+      { src: s.cover_url, sizes: '512x512', type: 'image/jpeg' },
+      { src: s.cover_url, sizes: '256x256', type: 'image/jpeg' },
+      { src: s.cover_url, sizes: '128x128', type: 'image/jpeg' },
+    ] : [
+      { src: 'icon-512x512.png', sizes: '512x512', type: 'image/png' },
+    ]
+  });
+
+  navigator.mediaSession.setActionHandler('play',          () => { audio.play();  isPlaying = true;  updatePlayBtns(true);  });
+  navigator.mediaSession.setActionHandler('pause',         () => { audio.pause(); isPlaying = false; updatePlayBtns(false); });
+  navigator.mediaSession.setActionHandler('previoustrack', () => prevSong());
+  navigator.mediaSession.setActionHandler('nexttrack',     () => nextSong());
+  navigator.mediaSession.setActionHandler('seekto', (d) => {
+    if (d.seekTime && audio.duration) audio.currentTime = d.seekTime;
+  });
+
+  // Keep playback state in sync
+  audio.addEventListener('play',  () => { navigator.mediaSession.playbackState = 'playing'; }, { passive: true });
+  audio.addEventListener('pause', () => { navigator.mediaSession.playbackState = 'paused';  }, { passive: true });
+}
+
+function updatePlayBtns(playing) {
+  ['playBtn','fsPlayBtn','playBtnMobile'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = playing ? '⏸' : '▶';
+  });
+  document.getElementById('fsArt')?.classList.toggle('playing', playing);
+  renderView();
+}
+
 
 init();
 </script>
