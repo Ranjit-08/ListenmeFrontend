@@ -40,6 +40,10 @@ html, body {
   font-size: 15px; line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
 
 /* ── NAVBAR ── */
 .navbar {
@@ -97,6 +101,11 @@ html, body {
 
 /* ── CONTAINERS ── */
 .page-container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+.app-container{
+  max-width:600px;
+  margin:auto;
+  padding:20px;
+}
 
 /* ── AUTH ── */
 .auth-wrapper {
@@ -231,7 +240,32 @@ select option { background: var(--card); }
 .page-title span { color: var(--accent); }
 .page-desc { color: var(--text-2); margin-bottom: 26px; font-size: 14px; }
 .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+/* ── PLAYER ── */
 
+.player-container{
+  text-align:center;
+  max-width:420px;
+  margin:auto;
+}
+
+.player-cover img{
+  width:100%;
+  max-width:320px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  display:block;
+}
+
+.player-title{
+  font-size:22px;
+  font-weight:700;
+  margin-top:14px;
+}
+
+.player-artist{
+  color:var(--text-2);
+  font-size:14px;
+}
 .password-wrap { position: relative; }
 .toggle-pw {
   position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
@@ -251,10 +285,54 @@ select option { background: var(--card); }
 
 @keyframes fadeInUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
+.player-progress{
+  width:100%;
+  margin:20px 0;
+}
+
+.player-progress input[type=range]{
+  width:100%;
+  touch-action: pan-x;
+}
+.player-controls{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:22px;
+  margin-top:12px;
+}
+
+.player-controls button{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  border:none;
+  background:var(--surface);
+  color:var(--text);
+  cursor:pointer;
+  font-size:18px;
+  transition: transform .15s ease, background .2s ease;
+}
+
+.player-controls .play{
+  width:72px;
+  height:72px;
+  background:var(--primary);
+  color:#000;
+}
 /* ── MOBILE ── */
 @media (max-width: 600px) {
-  .navbar { padding: 0 14px; height: 54px; }
-  .page-container { padding: 16px 14px; }
-  .auth-card { padding: 26px 16px; }
-  .otp-digit { width: 42px !important; height: 46px; font-size: 18px; }
+
+  .navbar{
+    padding:0 12px;
+  }
+
+  .page-container{
+    padding:14px 12px;
+  }
+
+  .player-container{
+    padding-top:10px;
+  }
+
 }
